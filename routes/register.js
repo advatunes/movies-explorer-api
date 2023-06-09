@@ -1,17 +1,7 @@
 const registerRouter = require("express").Router();
-const { celebrate, Joi } = require("celebrate");
 const { register } = require("../controllers/register");
+const { registerValidation } = require("../validation/validation");
 
-registerRouter.post(
-  "/signup",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().required().email(),
-      password: Joi.string().required().min(8),
-      name: Joi.string().min(2).max(30),
-    }),
-  }),
-  register
-);
+registerRouter.post("/signup", registerValidation, register);
 
-module.exports = { registerRouter };
+module.exports = registerRouter;

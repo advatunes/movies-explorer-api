@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-// const { STATUS_INVALID_CREDENTIALS } = require("../utils/errors");
 require("dotenv").config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -13,24 +12,22 @@ class STATUS_INVALID_CREDENTIALS extends Error {
 
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
-
   if (!authorization || !authorization.startsWith("Bearer ")) {
     return next(new STATUS_INVALID_CREDENTIALS("Необходима авторизация"));
   }
-
   const token = authorization.replace("Bearer ", "");
-
+  let payload;
   try {
-    const payload = jwt.verify(
+    payload = jwt.verify(
       token,
-      NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
+      NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
     );
-    req.user = payload;
-
-    next();
   } catch (err) {
     return next(new STATUS_INVALID_CREDENTIALS("Необходима авторизация"));
   }
+  req.user = payload;
+
+  return next();
 };
 
 module.exports = auth;

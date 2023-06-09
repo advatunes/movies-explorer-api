@@ -36,14 +36,14 @@ userSchema.statics.findUserByCredentials = function (email, password, next) {
     .then((user) => {
       if (!user) {
         throw new STATUS_INVALID_CREDENTIALS(
-          "Неверный адрес электронной почты или пароль"
+          "Неверный адрес электронной почты или пароль",
         );
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
           throw new STATUS_INVALID_CREDENTIALS(
-            "Неверный адрес электронной почты или пароль"
+            "Неверный адрес электронной почты или пароль",
           );
         }
 

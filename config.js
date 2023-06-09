@@ -1,6 +1,8 @@
+const { MONGO_URI } = process.env;
+
 const config = {
   port: 3000,
-  mongoUri: "mongodb://127.0.0.1:27017/bitfilmsdb",
+  mongoUri: MONGO_URI,
 };
 
 module.exports = config;
