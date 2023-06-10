@@ -1,9 +1,6 @@
 const Movie = require("../models/movie");
 
-const {
-  STATUS_NOT_FOUND,
-  STATUS_UNAUTHORIZED_ACTION,
-} = require("../utils/errors");
+const { STATUS_NOT_FOUND } = require("../utils/errors");
 
 const createMovie = (req, res, next) => {
   const owner = req.user._id;
