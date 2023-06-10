@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { STATUS_INVALID_CREDENTIALS } = require("../utils/errors");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -22,13 +23,6 @@ const userSchema = new mongoose.Schema({
     maxlength: 30,
   },
 });
-
-class STATUS_INVALID_CREDENTIALS extends Error {
-  constructor(message) {
-    super(message);
-    this.statusCode = 401;
-  }
-}
 
 userSchema.statics.findUserByCredentials = function (email, password, next) {
   return this.findOne({ email })

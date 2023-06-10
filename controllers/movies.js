@@ -47,16 +47,12 @@ const getMovies = (req, res, next) => {
 };
 
 const deleteMovieById = (req, res, next) => {
-  Movie.findById(req.params._id)
+  Movie.findOne({ _id: req.params._id, owner: req.user._id })
     .then((movie) => {
       if (!movie) {
         throw new STATUS_NOT_FOUND("Карточка не найдена");
       }
-      if (movie.owner.toString() !== req.user._id) {
-        throw new STATUS_UNAUTHORIZED_ACTION("Нельзя удалить чужую карточку");
-      } else {
-        return Movie.findByIdAndRemove(req.params._id);
-      }
+      return movie.deleteOne();
     })
     .then(() => {
       res.send({ message: "Карточка удалена" });

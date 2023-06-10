@@ -24,8 +24,7 @@ const updateProfile = (req, res, next) => {
       } else {
         next(error);
       }
-    })
-    .catch(next);
+    });
 };
 
 module.exports = { getUserInfo, updateProfile };

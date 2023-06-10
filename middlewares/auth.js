@@ -1,14 +1,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { STATUS_INVALID_CREDENTIALS } = require("../utils/errors");
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-
-class STATUS_INVALID_CREDENTIALS extends Error {
-  constructor(message) {
-    super(message);
-    this.statusCode = 401;
-  }
-}
 
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
