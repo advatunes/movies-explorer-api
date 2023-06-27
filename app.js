@@ -5,6 +5,7 @@ const { errors } = require("celebrate");
 const limiter = require("./utils/limiter");
 const routes = require("./routes");
 const config = require("./config");
+const cors = require("cors");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { STATUS_NOT_FOUND } = require("./utils/errors");
 const errorHandlers = require("./middlewares/errorHandlers");
@@ -15,6 +16,14 @@ mongoose.connect(config.mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "advatunes.movies.nomoreparties.sbs"],
+    credentials: true,
+  })
+);
+app.options("*", cors());
 
 app.use(requestLogger);
 app.use(limiter);
