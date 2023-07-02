@@ -19,7 +19,7 @@ mongoose.connect(config.mongoUri, {
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "advatunes.movies.nomoreparties.sbs"],
+    origin: ["http://localhost:3000", "https://advatunes.movies.nomoreparties.sbs"],
     credentials: true,
   })
 );
